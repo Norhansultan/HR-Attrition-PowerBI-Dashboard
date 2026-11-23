@@ -1,0 +1,377 @@
+HR Risk HTML = 
+VAR IsLight   = UPPER ( SELECTEDVALUE ( Theme[Mode], "Dark" ) ) = "LIGHT"
+
+VAR DarkV =
+    "--hb:#F8F2E4;--b1:#0A1C42;--b2:#040C20;--card:rgba(13,32,74,.96);--cardb:rgba(240,189,85,.55);--tx:#F3F6FC;--mu:#A9BBDD;--track:rgba(255,255,255,.10);--mid:#6C94E4;--mid2:#3A62B8;--red:#FF4D63;--red2:#C0172F;--redg:rgba(255,77,99,.40);--gold:#F0BD55;--gold2:#B98A2C;--t2:#0A1A3A;--nv:#44557A;--btn:#0E2A62;--kh:linear-gradient(135deg,#123374,#0A1D48);--khr:linear-gradient(135deg,#A01830,#5C0F1F);--kha:linear-gradient(135deg,#B26A05,#6B3D02);--khg:linear-gradient(135deg,#0F7A4B,#074A2D);--kb:#F3F5FA;--kbr:#FDEBEE;--kba:#FFF6E6;--kbg:#E8FAF2;--kn:#0A1A3A;--knr:#D81E33;--kna:#B96A00;--kng:#0F8A55;--amb:#F5A524;--grn:#22B57A;--sh:0 calc(12*var(--u)) calc(30*var(--u)) rgba(0,0,0,.45);--shh:0 calc(18*var(--u)) calc(40*var(--u)) rgba(0,0,0,.6);--tip:#000;--wave:#2250B5;--wo:.30"
+VAR LightV =
+    "--hb:#FFFFFF;--b1:#F5F1E7;--b2:#E7E0CF;--card:#FFFFFF;--cardb:#D8B25A;--tx:#0A1A3A;--mu:#5A6A88;--track:#E8E3D5;--mid:#2E58A8;--mid2:#173872;--red:#DC1F38;--red2:#A5122A;--redg:rgba(220,31,56,.35);--gold:#C8962E;--gold2:#9C7016;--t2:#0A1A3A;--nv:#44557A;--btn:#0A1A3A;--kh:linear-gradient(135deg,#123374,#0A1D48);--khr:linear-gradient(135deg,#A01830,#5C0F1F);--kha:linear-gradient(135deg,#B26A05,#6B3D02);--khg:linear-gradient(135deg,#0F7A4B,#074A2D);--kb:#FFFFFF;--kbr:#FDECEE;--kba:#FFF6E6;--kbg:#E8FAF2;--kn:#0A1A3A;--knr:#D81E33;--kna:#B96A00;--kng:#0F8A55;--amb:#F5A524;--grn:#22B57A;--sh:0 calc(10*var(--u)) calc(24*var(--u)) rgba(10,26,58,.14);--shh:0 calc(16*var(--u)) calc(34*var(--u)) rgba(10,26,58,.24);--tip:#0A1A3A;--wave:#3A63B8;--wo:.15"
+
+-- ================= CSS =================
+VAR Css1 =
+    "html,body{margin:0;padding:0;height:100%;overflow:hidden}"
+    & "*{box-sizing:border-box;margin:0;padding:0}"
+    & ".thm{position:absolute;opacity:0;width:0;height:0;pointer-events:none}"
+    & ".wrap{position:relative;width:min(100vw,calc(100vh*16/9));aspect-ratio:16/9;margin:0 auto;overflow:hidden;container-type:inline-size}"
+    & ".app{--u:1px;position:absolute;inset:0;overflow:hidden;font-family:'Segoe UI',Tahoma,Arial,sans-serif;color:var(--tx);background:linear-gradient(160deg,var(--b1),var(--b2))}"
+    & "@supports (width:1cqw){.app{--u:calc(100cqw/1280)}}"
+    & ".bg{position:absolute;inset:0;pointer-events:none;overflow:hidden}"
+    & ".wv{position:absolute;left:calc(-60*var(--u));width:calc(1400*var(--u));animation:drift 14s ease-in-out infinite alternate}"
+    & ".band{position:absolute;left:0;top:0;width:100%;height:calc(104*var(--u))}"
+    & ".sw{stroke-dasharray:1500;animation:draw 2.4s ease-out both}"
+    & ".hdr>*{animation:rise .7s backwards}"
+    & ".brand{position:absolute;left:calc(28*var(--u));top:calc(10*var(--u))}"
+    & ".eyebrow{display:flex;align-items:center;gap:calc(10*var(--u));font-size:calc(13*var(--u));letter-spacing:calc(3*var(--u));font-weight:700;color:var(--t2)}"
+    & ".eyebrow i{width:calc(1*var(--u));height:calc(16*var(--u));background:var(--gold2)}"
+    & ".ttl{font-size:calc(30*var(--u));font-weight:900;line-height:1.2;margin-top:calc(4*var(--u));color:var(--t2);letter-spacing:calc(-.5*var(--u));white-space:nowrap}"
+    & ".ttl span{background:linear-gradient(90deg,var(--gold),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}"
+    & ".nav{position:absolute;left:calc(424*var(--u));top:calc(30*var(--u));display:flex;gap:calc(8*var(--u))}"
+    & ".nv{height:calc(38*var(--u));border-radius:calc(19*var(--u));display:flex;align-items:center;justify-content:center;font-size:calc(14*var(--u));font-weight:700;color:var(--nv);border:calc(2*var(--u)) solid transparent;transition:all .25s}"
+    & ".nv:hover{color:var(--gold2);transform:translateY(calc(-2*var(--u)))}"
+    & ".nv.on{color:#fff;background:var(--btn);border-color:var(--gold);box-shadow:var(--sh)}"
+    & ".fbtn{position:absolute;left:calc(988*var(--u));top:calc(26*var(--u));width:calc(92*var(--u));height:calc(44*var(--u));border-radius:calc(22*var(--u));background:var(--btn);border:calc(2*var(--u)) solid var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;gap:calc(8*var(--u));font-size:calc(15*var(--u));font-weight:700;box-shadow:var(--sh);transition:all .3s}"
+    & ".fbtn:hover{transform:scale(1.07)}"
+    & ".cbtn{position:absolute;left:calc(1086*var(--u));top:calc(26*var(--u));width:calc(56*var(--u));height:calc(44*var(--u));border-radius:calc(22*var(--u));background:var(--red2);border:calc(2*var(--u)) solid var(--red);color:#fff;display:none;align-items:center;justify-content:center;gap:calc(3*var(--u));font-size:calc(12*var(--u));font-weight:700;box-shadow:var(--sh);cursor:pointer;transition:all .3s}"
+    & ".cbtn:hover{transform:scale(1.07);background:var(--red)}"
+    & ".cbtn i{font-style:normal;font-size:calc(16*var(--u));line-height:1}"
+    & ".dot{position:absolute;top:calc(-5*var(--u));right:calc(-3*var(--u));width:calc(14*var(--u));height:calc(14*var(--u));border-radius:50%;background:var(--red);border:calc(2*var(--u)) solid #fff;animation:ping 1.4s infinite}"
+    & ".tg{position:absolute;left:calc(1148*var(--u));top:calc(26*var(--u));width:calc(104*var(--u));height:calc(44*var(--u));border-radius:calc(22*var(--u));background:var(--btn);border:calc(2*var(--u)) solid var(--gold);display:grid;grid-template-columns:1fr 1fr;padding:calc(2*var(--u));cursor:pointer;box-shadow:var(--sh)}"
+    & ".kb{position:absolute;top:calc(2*var(--u));left:calc(2*var(--u));width:calc(46*var(--u));height:calc(36*var(--u));border-radius:calc(18*var(--u));background:linear-gradient(135deg,var(--gold),var(--gold2));transition:left .4s}"
+    & ".thm:checked~.wrap .kb{left:calc(50*var(--u))}"
+    & ".tl{position:relative;z-index:1;text-align:center;font-size:calc(11*var(--u));font-weight:800;letter-spacing:calc(1*var(--u));line-height:calc(36*var(--u));color:#fff;transition:color .3s}"
+    & ".tl.d{color:#0A1A3A}"
+    & ".thm:checked~.wrap .tl.d{color:#fff}"
+    & ".thm:checked~.wrap .tl.l{color:#0A1A3A}"
+    & ".kp{position:absolute;left:calc(24*var(--u));top:calc(112*var(--u));width:calc(280*var(--u));height:calc(592*var(--u));display:flex;flex-direction:column;gap:calc(14*var(--u))}"
+    & ".kpi{position:relative;flex:none;border-radius:calc(20*var(--u));overflow:hidden;border:calc(1.5*var(--u)) solid var(--gold);box-shadow:var(--sh);background:var(--kh);animation:rise .8s backwards;transition:transform .3s}"
+    & ".kpi.k1,.kpi.k2,.kpi.k3{height:calc(120*var(--u))}.kpi.k4{height:calc(190*var(--u))}"
+    & ".kpi:hover{transform:translateY(calc(-4*var(--u)))}"
+    & ".kpi.r{background:var(--khr);border-color:var(--red)}"
+    & ".kpi.a{background:var(--kha);border-color:var(--amb)}"
+    & ".kpi.g{background:var(--khg);border-color:var(--grn)}"
+    & ".kpi.big{animation:rise .8s backwards,gl 2.6s ease-in-out 1s infinite}"
+    & ".kh{display:flex;align-items:center;gap:calc(12*var(--u));height:calc(46*var(--u));padding:0 calc(16*var(--u));color:#fff;font-size:calc(17*var(--u));font-weight:700;white-space:nowrap}"
+    & ".ic{flex:none;width:calc(34*var(--u));height:calc(34*var(--u));border-radius:50%;background:rgba(255,255,255,.14);border:calc(1*var(--u)) solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;font-style:normal;font-size:calc(17*var(--u));font-weight:800}"
+    & ".kpi.r .ic{background:var(--red);border-color:transparent}"
+    & ".kpi.a .ic{background:var(--amb);border-color:transparent}"
+    & ".kpi.g .ic{background:var(--grn);border-color:transparent}"
+    & ".dv{flex:none;width:calc(1*var(--u));height:calc(24*var(--u));background:rgba(255,255,255,.3)}"
+    & ".kbd{position:absolute;left:0;right:0;bottom:0;top:calc(42*var(--u));background:var(--kb);border-radius:55% 45% 0 0/calc(22*var(--u)) calc(16*var(--u)) 0 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(4*var(--u));padding-top:calc(6*var(--u))}"
+    & ".kpi.r .kbd{background:var(--kbr)}.kpi.a .kbd{background:var(--kba)}.kpi.g .kbd{background:var(--kbg)}"
+    & ".kbd b{font-size:calc(46*var(--u));font-weight:900;color:var(--kn);line-height:1}"
+    & ".kpi.r .kbd b{color:var(--knr)}.kpi.a .kbd b{color:var(--kna)}.kpi.g .kbd b{color:var(--kng)}"
+    & ".kpi.big .kbd b{font-size:calc(60*var(--u))}"
+    & ".sub{font-size:calc(14*var(--u));color:#5A6A88;font-weight:600;text-align:center;line-height:1.25;padding:0 calc(14*var(--u))}"
+    & ".pg{position:absolute;left:0;bottom:0;width:100%;height:calc(6*var(--u));background:rgba(216,30,51,.18)}"
+    & ".pg i{display:block;height:100%;background:linear-gradient(90deg,var(--red2),var(--red));animation:wid 1.4s cubic-bezier(.2,.8,.2,1) both}"
+
+VAR Css2 =
+    ".main{position:absolute;left:calc(318*var(--u));top:calc(112*var(--u));width:calc(938*var(--u));height:calc(592*var(--u));display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:calc(278*var(--u)) calc(300*var(--u));gap:calc(14*var(--u))}"
+    & ".card{position:relative;min-height:0;border-radius:calc(20*var(--u));padding:calc(16*var(--u)) calc(22*var(--u));background:var(--card);border:calc(1.5*var(--u)) solid var(--cardb);box-shadow:var(--sh);animation:rise .8s backwards;transition:transform .3s,box-shadow .3s}"
+    & ".card:hover{transform:translateY(calc(-5*var(--u)));box-shadow:var(--shh)}"
+    & ".card::before{content:'';position:absolute;left:calc(22*var(--u));top:0;width:calc(44*var(--u));height:calc(4*var(--u));border-radius:0 0 calc(4*var(--u)) calc(4*var(--u));background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width .4s}"
+    & ".card:hover::before{width:calc(120*var(--u))}"
+    & ".eb{font-size:calc(11*var(--u));letter-spacing:calc(2.5*var(--u));font-weight:800;color:var(--gold2);margin-top:calc(2*var(--u))}"
+    & ".ct2{font-size:calc(21*var(--u));font-weight:800;margin-top:calc(2*var(--u));color:var(--tx);white-space:nowrap}"
+    & ".hi{--c:var(--red);--c2:var(--red2)}.lo{--c:var(--gold);--c2:var(--gold2)}.mid{--c:var(--mid);--c2:var(--mid2)}"
+    & ".lgd{position:absolute;right:calc(22*var(--u));top:calc(17*var(--u));display:flex;gap:calc(12*var(--u));font-size:calc(11*var(--u));color:var(--mu);font-weight:600}"
+    & ".lgd span{display:flex;align-items:center;gap:calc(5*var(--u))}"
+    & ".lgd i{display:inline-block;width:calc(10*var(--u));height:calc(10*var(--u));border-radius:calc(3*var(--u))}"
+    & ".lgd i.l{width:calc(14*var(--u));height:calc(3*var(--u));border-radius:calc(2*var(--u));background:var(--tx)}"
+    & ".cmb{display:block;width:calc(418*var(--u));height:calc(190*var(--u));margin-top:calc(4*var(--u));overflow:visible}"
+    & ".cmb>*{animation:fade 1s both}"
+    & ".cbr.hi{fill:url(#gR)}.cbr.mid{fill:url(#gM)}.cbr.lo{fill:url(#gL)}"
+    & ".cbr{transition:filter .2s}.cbr:hover{filter:brightness(1.2)}"
+    & ".gl{stroke:var(--track);stroke-width:2}"
+    & ".bv{font-size:14px;font-weight:800;fill:var(--tx)}.bv.hi{fill:var(--red)}.bv.lo{fill:var(--gold)}"
+    & ".bn{font-size:12.5px;font-weight:600;fill:var(--mu)}"
+    & ".ln{fill:none;stroke:var(--tx);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round;opacity:.9}"
+    & ".mk{fill:var(--card);stroke:var(--tx);stroke-width:2.5}"
+    & ".pl{fill:var(--tx);opacity:.95}"
+    & ".pt{font-size:12.5px;font-weight:800;fill:var(--b2)}"
+    & ".bars{display:flex;flex-direction:column;justify-content:space-between;margin-top:calc(8*var(--u))}"
+    & ".bars.t{height:calc(190*var(--u))}"
+    & ".row{position:relative}"
+    & ".rl{display:flex;justify-content:space-between;align-items:baseline;font-size:calc(17*var(--u));font-weight:600;margin-bottom:calc(4*var(--u))}"
+    & ".vl{font-weight:800;color:var(--c)}.vl.mid{color:var(--tx)}"
+    & ".row:hover .nm{color:var(--c)}"
+    & ".tr{height:calc(10*var(--u));border-radius:calc(10*var(--u));background:var(--track);overflow:hidden}"
+    & ".tr.sm{height:calc(6*var(--u))}"
+    & ".fl{height:100%;border-radius:calc(10*var(--u));background:linear-gradient(90deg,var(--c2),var(--c));animation:wid 1.1s cubic-bezier(.2,.8,.2,1) both}"
+    & ".fl.hi{animation:wid 1.1s cubic-bezier(.2,.8,.2,1) both,glow 2.4s ease-in-out 1.2s infinite}"
+    & ".row:nth-child(2) .fl{animation-delay:.1s}.row:nth-child(3) .fl{animation-delay:.2s}.row:nth-child(4) .fl{animation-delay:.3s}.row:nth-child(5) .fl{animation-delay:.4s}"
+    & ".tip{position:absolute;right:0;bottom:100%;padding:calc(3*var(--u)) calc(10*var(--u));border-radius:calc(8*var(--u));background:var(--tip);color:#fff;font-size:calc(12*var(--u));font-weight:600;opacity:0;transform:translateY(calc(5*var(--u)));transition:all .2s;pointer-events:none;z-index:5;white-space:nowrap}"
+    & ".row:hover .tip{opacity:1;transform:none}"
+    & ".th,.xr,.xc,.tot{display:grid;grid-template-columns:1fr calc(66*var(--u)) calc(60*var(--u)) calc(80*var(--u)) calc(100*var(--u));column-gap:calc(10*var(--u));align-items:center;padding:0 calc(8*var(--u))}"
+    & ".th{margin-top:calc(10*var(--u));height:calc(22*var(--u));font-size:calc(11*var(--u));letter-spacing:calc(1.5*var(--u));font-weight:800;color:var(--mu);border-bottom:calc(1*var(--u)) solid var(--track)}"
+    & ".nt{text-align:right}"
+    & ".tb{height:calc(142*var(--u));margin-top:calc(4*var(--u));overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--gold2) transparent}"
+    & ".xg{border-bottom:calc(1*var(--u)) solid var(--track)}"
+    & ".xp{position:absolute;opacity:0;width:0;height:0;pointer-events:none}"
+    & ".xr{min-height:calc(36*var(--u));font-size:calc(17*var(--u));font-weight:700;cursor:pointer;border-radius:calc(10*var(--u));transition:background .2s}"
+    & ".xr:hover{background:rgba(240,189,85,.10)}"
+    & ".xp:checked~.xr{background:rgba(240,189,85,.14)}"
+    & ".nmx{display:flex;align-items:center;white-space:nowrap}"
+    & ".ar{display:inline-block;font-style:normal;color:var(--gold);font-size:calc(13*var(--u));width:calc(22*var(--u));transition:transform .25s}"
+    & ".xp:checked~.xr .ar{transform:rotate(90deg)}"
+    & ".xs{display:none}"
+    & ".xp:checked~.xs{display:block;animation:rise .35s both;padding-bottom:calc(6*var(--u))}"
+    & ".xc{min-height:calc(28*var(--u));font-size:calc(15*var(--u));font-weight:600;color:var(--mu)}"
+    & ".xc .nt{color:var(--tx)}.xc .nt.vl.hi{color:var(--red)}.xc .nt.vl.lo{color:var(--gold)}"
+    & ".nmc{padding-left:calc(28*var(--u));white-space:nowrap;overflow:hidden;text-overflow:ellipsis}"
+    & ".tot{margin-top:calc(6*var(--u));height:calc(34*var(--u));font-size:calc(17*var(--u));font-weight:800;border-top:calc(1*var(--u)) solid var(--cardb)}"
+    & ".sts{height:calc(204*var(--u));margin-top:calc(10*var(--u));display:flex;flex-direction:column;justify-content:space-between}"
+    & ".sn{font-size:calc(14*var(--u));font-weight:700;margin-bottom:calc(4*var(--u))}"
+    & ".sr{display:flex;align-items:center;gap:calc(8*var(--u));margin-bottom:calc(4*var(--u))}"
+    & ".stk{flex:1;height:calc(12*var(--u));border-radius:calc(8*var(--u));background:var(--track);overflow:hidden}"
+    & ".sf{height:100%;border-radius:calc(8*var(--u));background:linear-gradient(90deg,var(--c2),var(--c));animation:wid 1.1s cubic-bezier(.2,.8,.2,1) both}"
+    & ".sr b{width:calc(40*var(--u));text-align:right;font-size:calc(14*var(--u));font-weight:800}"
+    & ".sr b.lf{color:var(--red)}"
+    & ".nd{height:calc(150*var(--u));display:flex;align-items:center;justify-content:center;color:var(--mu);font-size:calc(15*var(--u))}"
+    & "@keyframes rise{from{opacity:0;transform:translateY(calc(18*var(--u)))}to{opacity:1;transform:none}}"
+    & "@keyframes fade{from{opacity:0}to{opacity:1}}"
+    & "@keyframes drift{from{transform:translateX(calc(-40*var(--u)))}to{transform:translateX(calc(40*var(--u)))}}"
+    & "@keyframes draw{from{stroke-dashoffset:1500}}"
+    & "@keyframes wid{from{width:0}}"
+    & "@keyframes glow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.3)}}"
+    & "@keyframes gl{0%,100%{box-shadow:0 0 0 0 var(--redg)}50%{box-shadow:0 0 calc(28*var(--u)) calc(4*var(--u)) var(--redg)}}"
+    & "@keyframes ping{0%{box-shadow:0 0 0 0 var(--red)}100%{box-shadow:0 0 0 calc(10*var(--u)) transparent}}"
+
+-- ================= Filter panel CSS (compact, no scroll) =================
+VAR CssF =
+    ".fbtn{cursor:pointer}"
+    & ".fv{position:absolute;inset:0;z-index:40;background:rgba(4,12,32,.45);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s}"
+    & ".fv.on{opacity:1;pointer-events:auto}"
+    & ".fdr{position:absolute;top:0;right:0;bottom:0;width:calc(410*var(--u));z-index:45;padding:calc(16*var(--u)) calc(18*var(--u));background:var(--card);border-left:calc(2*var(--u)) solid var(--gold);transform:translateX(105%);transition:transform .4s cubic-bezier(.2,.9,.3,1);display:flex;flex-direction:column;gap:calc(10*var(--u));overflow:hidden}"
+    & ".fdr>*{flex:none}"
+    & ".fdr.on{transform:none}"
+    & ".fdr h2{margin:0;font-size:calc(20*var(--u));color:var(--tx);display:flex;justify-content:space-between;align-items:center}"
+    & ".fx{width:calc(28*var(--u));height:calc(28*var(--u));border-radius:50%;background:var(--track);text-align:center;line-height:calc(28*var(--u));cursor:pointer;font-size:calc(16*var(--u));color:var(--tx);transition:transform .3s}"
+    & ".fx:hover{transform:rotate(90deg)}"
+    & ".fdr h4{margin:0 0 calc(5*var(--u));font-size:calc(11*var(--u));color:var(--gold2);letter-spacing:calc(2*var(--u));font-weight:800}"
+    & ".fog{display:flex;flex-wrap:wrap;gap:calc(5*var(--u))}"
+    & ".fop{padding:calc(4*var(--u)) calc(10*var(--u));border-radius:calc(13*var(--u));border:calc(1.5*var(--u)) solid var(--cardb);font-size:calc(12*var(--u));font-weight:600;color:var(--tx);cursor:pointer;transition:all .2s}"
+    & ".fop:hover{transform:translateY(calc(-1*var(--u)))}"
+    & ".fop.on{background:var(--btn);color:#fff;border-color:var(--gold)}"
+    & ".fcp{display:flex;flex-wrap:wrap;gap:calc(5*var(--u));align-items:center;min-height:calc(22*var(--u))}"
+    & ".ffc{display:inline-flex;gap:calc(5*var(--u));align-items:center;padding:calc(2*var(--u)) calc(5*var(--u)) calc(2*var(--u)) calc(9*var(--u));border-radius:calc(12*var(--u));background:var(--track);border:calc(1*var(--u)) solid var(--cardb);color:var(--tx);font-size:calc(11*var(--u));font-weight:600;cursor:pointer}"
+    & ".ffc i{font-style:normal;width:calc(15*var(--u));height:calc(15*var(--u));line-height:calc(14*var(--u));text-align:center;border-radius:50%;background:var(--red);color:#fff}"
+    & ".fca{color:var(--gold2);font-weight:700;cursor:pointer;text-decoration:underline;font-size:calc(12*var(--u))}"
+    & ".fmu{color:var(--mu);font-size:calc(12*var(--u))}"
+    & ".ffo{margin-top:auto;display:flex;gap:calc(8*var(--u))}"
+    & ".fbt{flex:1;display:flex;align-items:center;justify-content:center;height:calc(36*var(--u));border-radius:calc(18*var(--u));background:var(--btn);color:#fff;font-size:calc(14*var(--u));font-weight:800;cursor:pointer;border:calc(2*var(--u)) solid var(--gold);transition:transform .2s}"
+    & ".fbt:hover{transform:translateY(calc(-2*var(--u)))}"
+    & ".fbt.gh{background:transparent;color:var(--tx);border-color:var(--cardb)}"
+
+-- ================= HTML blocks =================
+VAR Bg =
+    "<div class='bg'>"
+    & "<svg class='wv' style='bottom:calc(-40*var(--u));height:calc(280*var(--u))' viewBox='0 0 1400 280' preserveAspectRatio='none'>"
+    & "<path style='fill:var(--wave);opacity:var(--wo)' d='M0,130 C250,40 450,220 700,140 C950,60 1150,180 1400,90 L1400,280 L0,280Z'/>"
+    & "<path style='fill:none;stroke:var(--gold);stroke-width:3;opacity:.55' d='M0,130 C250,40 450,220 700,140 C950,60 1150,180 1400,90'/></svg></div>"
+    & "<svg class='band' viewBox='0 0 1280 104' preserveAspectRatio='none'><path style='fill:var(--hb)' d='M0,0 H1280 V60 C1060,100 820,56 560,82 C340,104 150,96 0,76 Z'/>"
+    & "<path class='sw' style='fill:none;stroke:var(--gold);stroke-width:3' d='M1280,60 C1060,100 820,56 560,82 C340,104 150,96 0,76'/></svg>"
+
+VAR Hdr =
+    "<div class='hdr'>"
+    & "<div class='brand'><div class='eyebrow'><svg style='width:calc(28*var(--u));height:calc(24*var(--u));fill:var(--t2)' viewBox='0 0 24 24'><circle cx='12' cy='7' r='3.2'/><circle cx='5.5' cy='9' r='2.4'/><circle cx='18.5' cy='9' r='2.4'/><path d='M6.5 20v-3.5a5.5 5.5 0 0 1 11 0V20z'/><path d='M0.8 18v-2.6a4 4 0 0 1 4.6-3.9A7 7 0 0 0 4 16.5V18z'/><path d='M23.2 18v-2.6a4 4 0 0 0-4.6-3.9A7 7 0 0 1 20 16.5V18z'/></svg><i></i>HR ANALYTICS</div>"
+    & "<div class='ttl'>Risk &amp; <span>Recommendations</span></div></div>"
+    & "<div class='nav'><div class='nv' style='width:calc(96*var(--u))'>Overview</div><div class='nv' style='width:calc(88*var(--u))'>Drivers</div><div class='nv' style='width:calc(152*var(--u))'>Employee Insights</div><div class='nv on' style='width:calc(196*var(--u))'>Risk &amp; Recommendations</div></div>"
+    & "<div class='fbtn' id='fo'><svg style='width:calc(18*var(--u));height:calc(18*var(--u));fill:var(--gold)' viewBox='0 0 24 24'><path d='M3 4h18l-7 8.5V20l-4-2v-5.5z'/></svg>Filter<i class='dot' id='fn' style='display:none'></i></div>"
+    & "<div class='cbtn' id='cb' title='Clear all filters'><i>&times;</i>Clear</div>"
+    & "<label for='thm' class='tg'><div class='kb'></div><div class='tl d'>DARK</div><div class='tl l'>LIGHT</div></label>"
+    & "</div>"
+
+-- ================= Data for the JS filter system =================
+VAR _dD =
+    SUBSTITUTE ( SUBSTITUTE (
+        CONCATENATEX ( ALL ( 'Fact Employee'[Department] ), 'Fact Employee'[Department], "|", 'Fact Employee'[Department], ASC ),
+        "\", "\\" ), "'", "\'" )
+VAR _dJ =
+    SUBSTITUTE ( SUBSTITUTE (
+        CONCATENATEX ( ALL ( 'Fact Employee'[JobRole] ), 'Fact Employee'[JobRole], "|", 'Fact Employee'[JobRole], ASC ),
+        "\", "\\" ), "'", "\'" )
+VAR _dO =
+    SUBSTITUTE ( SUBSTITUTE (
+        CONCATENATEX ( ALL ( 'Fact Employee'[OverTime] ), 'Fact Employee'[OverTime], "|", 'Fact Employee'[OverTime], ASC ),
+        "\", "\\" ), "'", "\'" )
+VAR _dL =
+    CONCATENATEX ( ALL ( 'Fact Employee'[JobLevel] ), 'Fact Employee'[JobLevel], "|", 'Fact Employee'[JobLevel], ASC )
+VAR _dG =
+    SUBSTITUTE ( SUBSTITUTE (
+        CONCATENATEX ( ALL ( 'Fact Employee'[Gender] ), 'Fact Employee'[Gender], "|", 'Fact Employee'[Gender], ASC ),
+        "\", "\\" ), "'", "\'" )
+VAR _dR =
+    SUBSTITUTE ( SUBSTITUTE (
+        CONCATENATEX ( ALL ( 'Fact Employee'[Risk Level] ), 'Fact Employee'[Risk Level], "|", 'Fact Employee'[Risk Level], ASC ),
+        "\", "\\" ), "'", "\'" )
+
+VAR _Base =
+    SUMMARIZE (
+        'Fact Employee',
+        'Fact Employee'[EmployeeNumber],
+        'Fact Employee'[Department],
+        'Fact Employee'[JobRole],
+        'Fact Employee'[OverTime],
+        'Fact Employee'[JobLevel],
+        'Fact Employee'[Gender],
+        'Fact Employee'[Risk Level],
+        'Fact Employee'[Attrition],
+        'Fact Employee'[JobSatisfaction]
+    )
+-- one row per employee: d,j,o,l,g,rl,attrition(0/1),jobsatisfaction
+VAR _Rows =
+    SUBSTITUTE ( SUBSTITUTE (
+    CONCATENATEX ( _Base,
+        ( RANKX ( ALL ( 'Fact Employee'[Department] ), 'Fact Employee'[Department],, ASC, DENSE ) - 1 ) & "," &
+        ( RANKX ( ALL ( 'Fact Employee'[JobRole] ),    'Fact Employee'[JobRole],,    ASC, DENSE ) - 1 ) & "," &
+        ( RANKX ( ALL ( 'Fact Employee'[OverTime] ),   'Fact Employee'[OverTime],,   ASC, DENSE ) - 1 ) & "," &
+        ( 'Fact Employee'[JobLevel] - 1 ) & "," &
+        ( RANKX ( ALL ( 'Fact Employee'[Gender] ),     'Fact Employee'[Gender],,     ASC, DENSE ) - 1 ) & "," &
+        ( RANKX ( ALL ( 'Fact Employee'[Risk Level] ), 'Fact Employee'[Risk Level],, ASC, DENSE ) - 1 ) & "," &
+        IF ( 'Fact Employee'[Attrition] = "Yes", 1, 0 ) & "," &
+        'Fact Employee'[JobSatisfaction],
+        ";" ),
+    "\", "\\" ), "'", "\'" )
+
+-- ================= KPI cards (values filled by JS) =================
+VAR Kpis =
+    "<div class='kp'>"
+    & "<div class='kpi k1 r' style='animation-delay:.05s'><div class='kh'><i class='ic'><svg style='width:calc(18*var(--u));height:calc(18*var(--u))' viewBox='0 0 24 24' fill='none' stroke='#fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 3l10 18H2z'/><path d='M12 10v5M12 18v.5'/></svg></i><span class='dv'></span>High Risk</div>"
+    & "<div class='kbd'><b id='k1'>-</b></div></div>"
+    & "<div class='kpi k2 a' style='animation-delay:.12s'><div class='kh'><i class='ic'><svg style='width:calc(18*var(--u));height:calc(18*var(--u))' viewBox='0 0 24 24' fill='none' stroke='#fff' stroke-width='2.2' stroke-linecap='round'><circle cx='12' cy='12' r='9'/><path d='M12 7v6M12 16.5v.5'/></svg></i><span class='dv'></span>Medium Risk</div>"
+    & "<div class='kbd'><b id='k2'>-</b></div></div>"
+    & "<div class='kpi k3 g' style='animation-delay:.19s'><div class='kh'><i class='ic'><svg style='width:calc(18*var(--u));height:calc(18*var(--u))' viewBox='0 0 24 24' fill='none' stroke='#fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><path d='M8 12.5l3 3 5-6'/></svg></i><span class='dv'></span>Low Risk</div>"
+    & "<div class='kbd'><b id='k3'>-</b></div></div>"
+    & "<div class='kpi k4 r big' style='animation-delay:.26s'><div class='kh'><i class='ic'>%</i><span class='dv'></span>High Risk Attrition</div>"
+    & "<div class='kbd'><b id='k4'>-</b><span class='sub' id='k4s'></span></div>"
+    & "<div class='pg'><i id='k4p' style='width:0%'></i></div></div>"
+    & "</div>"
+
+-- ================= Chart cards (bodies drawn by JS) =================
+VAR CardCmb =
+    "<div class='card' style='grid-column:span 6;animation-delay:.30s'><div class='eb'>HOTSPOTS</div><div class='ct2'>Attrition vs Job Satisfaction</div>"
+    & "<div class='lgd'><span><i style='background:var(--red)'></i>Attrition rate</span><span><i class='l'></i>Avg. job satisfaction</span></div>"
+    & "<div id='cC'></div></div>"
+VAR CardRole =
+    "<div class='card' style='grid-column:span 6;animation-delay:.36s'><div class='eb'>WHO IS LEAVING</div><div class='ct2'>Employees Left by JobRole</div><div class='bars t'>"
+    & "<div id='cR'></div></div></div>"
+VAR CardMx =
+    "<div class='card' style='grid-column:span 8;animation-delay:.42s'><div class='eb'>CLICK A DEPARTMENT TO EXPAND</div><div class='ct2'>Department Breakdown</div>"
+    & "<div class='th'><span>DEPARTMENT</span><span class='nt'>TOTAL</span><span class='nt'>LEFT</span><span class='nt'>RATE</span><span>ATTRITION</span></div>"
+    & "<div class='tb' id='cX'></div>"
+    & "<div class='tot'><span>Total</span><span class='nt' id='tT'></span><span class='nt' id='tL'></span><span class='nt' id='tR'></span><span></span></div></div>"
+VAR CardSt =
+    "<div class='card' style='grid-column:span 4;animation-delay:.48s'><div class='eb'>ACTIVE VS LEFT</div><div class='ct2'>Status by Department</div>"
+    & "<div class='lgd'><span><i style='background:var(--mid)'></i>Active</span><span><i style='background:var(--red)'></i>Left</span></div>"
+    & "<div class='sts' id='cS'></div></div>"
+
+-- ================= JavaScript (filters + all charts) =================
+VAR Js =
+    "(function(){"
+    & "var D={D:'" & _dD & "',J:'" & _dJ & "',O:'" & _dO & "',L:'" & _dL & "',G:'" & _dG & "',R:'" & _dR & "',X:'" & _Rows & "'};"
+    & "var N={d:D.D.split('|'),j:D.J.split('|'),o:D.O.split('|'),l:D.L.split('|'),g:D.G.split('|'),r:D.R.split('|')};"
+    & "var rows=D.X?D.X.split(';').map(function(t){var a=t.split(',');return{d:+a[0],j:+a[1],o:+a[2],l:+a[3],g:+a[4],rl:+a[5],at:+a[6],sat:+a[7]}}):[];"
+    & "var F={d:[],j:[],o:[],l:[],g:[]},G=null;"
+    & "var LB={d:'Department',j:'Job Role',o:'OverTime',l:'Job Level',g:'Gender'};"
+    & "var $=function(i){return document.getElementById(i)};"
+    & "function ok(a,i){return !a.length||a.indexOf(i)>-1}"
+    & "function E(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/'/g,'&#39;')}"
+    & "function fm(n){return n.toLocaleString('en-US')}"
+    & "function pc(v){return (v*100).toFixed(2)+'%'}"
+    & "function ri(w){for(var i=0;i<N.r.length;i++){if(N.r[i].toLowerCase().indexOf(w)==0)return i}return -1}"
+    & "function pick(){return rows.filter(function(x){return ok(F.d,x.d)&&ok(F.j,x.j)&&ok(F.o,x.o)&&ok(F.l,x.l)&&ok(F.g,x.g)})}"
+    & "function aggBy(a,k){var m={};a.forEach(function(x){var e=m[x[k]]||(m[x[k]]={k:x[k],t:0,l:0,s:0});e.t++;e.l+=x.at;e.s+=x.sat});return Object.keys(m).map(function(i){var e=m[i];e.r=e.t?e.l/e.t:0;e.as=e.t?e.s/e.t:0;return e})}"
+    & "var ND='<div class=\'nd\'>No data for the current filters</div>';"
+    & "function combo(dl){var el=$('cC');if(!dl.length){el.innerHTML=ND;return}"
+    & " dl.sort(function(a,b){return b.r-a.r||(N.d[a.k]<N.d[b.k]?-1:1)});"
+    & " var mx=0,mn=1e9,smn=1e9,smx=0;dl.forEach(function(e){if(e.r>mx)mx=e.r;if(e.r<mn)mn=e.r;if(e.as<smn)smn=e.as;if(e.as>smx)smx=e.as});"
+    & " var slot=370/dl.length,pts=[],cols='',dots='';"
+    & " dl.forEach(function(e,i){var cx=Math.round(24+(i+0.5)*slot);var h=Math.max(14,Math.round(e.r/(mx||1)*112));"
+    & "  var cls=e.r==mx?'hi':e.r==mn?'lo':'mid';"
+    & "  var nm=N.d[e.k],sp=nm.indexOf(' '),l1=sp<0?nm:nm.slice(0,sp),l2=sp<0?'':nm.slice(sp+1).replace(/^\s+/,'');"
+    & "  cols+='<rect class=\'cbr '+cls+'\' x=\''+(cx-32)+'\' y=\''+(148-h)+'\' width=\'64\' height=\''+h+'\' rx=\'9\'/>'"
+    & "   +'<text class=\'bv '+cls+'\' x=\''+cx+'\' y=\''+(148-h-7)+'\' text-anchor=\'middle\'>'+pc(e.r)+'</text>'"
+    & "   +'<text class=\'bn\' x=\''+cx+'\' y=\''+(l2?165:172)+'\' text-anchor=\'middle\'>'+E(l1)+'</text>'"
+    & "   +(l2?'<text class=\'bn\' x=\''+cx+'\' y=\'180\' text-anchor=\'middle\'>'+E(l2)+'</text>':'');"
+    & "  var ly=Math.round(125-(smx==smn?0.5:(e.as-smn)/(smx-smn))*60);"
+    & "  pts.push(cx+','+ly);"
+    & "  dots+='<circle class=\'mk\' cx=\''+cx+'\' cy=\''+ly+'\' r=\'5\'/><rect class=\'pl\' x=\''+(cx-21)+'\' y=\''+(ly-31)+'\' width=\'42\' height=\'19\' rx=\'10\'/><text class=\'pt\' x=\''+cx+'\' y=\''+(ly-17)+'\' text-anchor=\'middle\'>'+e.as.toFixed(2)+'</text>'});"
+    & " el.innerHTML='<svg class=\'cmb\' viewBox=\'0 0 418 190\'><defs>'"
+    & "  +'<linearGradient id=\'gR\' x1=\'0\' y1=\'1\' x2=\'0\' y2=\'0\'><stop offset=\'0\' style=\'stop-color:var(--red2)\'/><stop offset=\'1\' style=\'stop-color:var(--red)\'/></linearGradient>'"
+    & "  +'<linearGradient id=\'gM\' x1=\'0\' y1=\'1\' x2=\'0\' y2=\'0\'><stop offset=\'0\' style=\'stop-color:var(--mid2)\'/><stop offset=\'1\' style=\'stop-color:var(--mid)\'/></linearGradient>'"
+    & "  +'<linearGradient id=\'gL\' x1=\'0\' y1=\'1\' x2=\'0\' y2=\'0\'><stop offset=\'0\' style=\'stop-color:var(--gold2)\'/><stop offset=\'1\' style=\'stop-color:var(--gold)\'/></linearGradient></defs>'"
+    & "  +'<line class=\'gl\' x1=\'10\' x2=\'408\' y1=\'148\' y2=\'148\'/>'+cols"
+    & "  +'<polyline class=\'ln\' points=\''+pts.join(' ')+'\'/>'+dots+'</svg>'}"
+    & "function roleBars(a){var el=$('cR');var l=aggBy(a,'j');l=l.filter(function(e){return e.l>0});"
+    & " if(!l.length){el.innerHTML=ND;return}"
+    & " l.sort(function(x,y){return y.l-x.l});l=l.slice(0,5);"
+    & " var mx=0,mn=1e9;l.forEach(function(e){if(e.l>mx)mx=e.l;if(e.l<mn)mn=e.l});"
+    & " var h='';l.forEach(function(e){var cls=e.l==mx?'hi':e.l==mn?'lo':'mid';var w=Math.max(4,Math.round(e.l/(mx||1)*100));"
+    & " h+='<div class=\'row '+cls+'\'><span class=\'tip\'>'+pc(e.r)+' attrition rate</span><div class=\'rl\'><span class=\'nm\'>'+E(N.j[e.k])+'</span><span class=\'vl '+cls+'\'>'+fm(e.l)+'</span></div><div class=\'tr\'><div class=\'fl '+cls+'\' style=\'width:'+w+'%\'></div></div></div>'});"
+    & " el.innerHTML=h}"
+    & "function matrix(a){var el=$('cX');var dl=aggBy(a,'d');"
+    & " if(!dl.length){el.innerHTML=ND;return}"
+    & " dl.sort(function(x,y){return N.d[x.k]<N.d[y.k]?-1:1});"
+    & " var mx=0,mn=1e9;dl.forEach(function(e){if(e.r>mx)mx=e.r;if(e.r<mn)mn=e.r});"
+    & " var h='';dl.forEach(function(e,i){var cls=e.r==mx?'hi':e.r==mn?'lo':'mid';var w=Math.max(4,Math.round(e.r/(mx||1)*100));"
+    & "  var sub=aggBy(a.filter(function(x){return x.d==e.k}),'j');"
+    & "  sub.sort(function(x,y){return y.r-x.r});"
+    & "  var smx=0,smn=1e9;sub.forEach(function(s){if(s.r>smx)smx=s.r;if(s.r<smn)smn=s.r});"
+    & "  var sh='';sub.forEach(function(s){var c2=s.r==smx?'hi':s.r==smn?'lo':'mid';var w2=Math.max(4,Math.round(s.r/(smx||1)*100));"
+    & "   sh+='<div class=\'xc\'><span class=\'nmc\'>'+E(N.j[s.k])+'</span><span class=\'nt\'>'+fm(s.t)+'</span><span class=\'nt\'>'+fm(s.l)+'</span><span class=\'nt vl '+c2+'\'>'+pc(s.r)+'</span><div class=\'tr sm\'><div class=\'fl '+c2+'\' style=\'width:'+w2+'%\'></div></div></div>'});"
+    & "  h+='<div class=\'xg\'><input type=\'checkbox\' class=\'xp\' id=\'x'+(i+1)+'\'><label for=\'x'+(i+1)+'\' class=\'xr\'><span class=\'nmx\'><i class=\'ar\'>&#9656;</i>'+E(N.d[e.k])+'</span>'"
+    & "   +'<span class=\'nt\'>'+fm(e.t)+'</span><span class=\'nt\'>'+fm(e.l)+'</span><span class=\'nt vl '+cls+'\'>'+pc(e.r)+'</span>'"
+    & "   +'<div class=\'tr\'><div class=\'fl '+cls+'\' style=\'width:'+w+'%\'></div></div></label>'"
+    & "   +'<div class=\'xs\'>'+sh+'</div></div>'});"
+    & " el.innerHTML=h}"
+    & "function statusBars(dl){var el=$('cS');if(!dl.length){el.innerHTML=ND;return}"
+    & " dl.forEach(function(e){e.a=e.t-e.l});"
+    & " dl.sort(function(x,y){return y.a-x.a});"
+    & " var ma=0;dl.forEach(function(e){if(e.a>ma)ma=e.a});"
+    & " var h='';dl.forEach(function(e){var wa=Math.max(3,Math.round(e.a/(ma||1)*100));var wl=e.l==0?0:Math.max(3,Math.round(e.l/(ma||1)*100));"
+    & " h+='<div class=\'sg\'><div class=\'sn\'>'+E(N.d[e.k])+'</div>'"
+    & "  +'<div class=\'sr\'><div class=\'stk\'><div class=\'sf mid\' style=\'width:'+wa+'%\'></div></div><b>'+fm(e.a)+'</b></div>'"
+    & "  +'<div class=\'sr\'><div class=\'stk\'><div class=\'sf hi\' style=\'width:'+wl+'%\'></div></div><b class=\'lf\'>'+fm(e.l)+'</b></div></div>'});"
+    & " el.innerHTML=h}"
+    & "function chipsHtml(){var h='',n=0;['d','j','o','l','g'].forEach(function(k){F[k].forEach(function(i){n++;h+='<span class=\'ffc\' data-x=\''+k+'\' data-i=\''+i+'\'>'+LB[k]+': '+E(N[k][i])+'<i>&times;</i></span>'})});"
+    & " return n?h+'<span class=\'fca\' id=\'ca\'>Clear all</span>':'<span class=\'fmu\'>No filters applied</span>'}"
+    & "function drawer(){var h='<h2>Filters<span class=\'fx\' id=\'dx\'>&times;</span></h2><div class=\'fcp\'>'+chipsHtml()+'</div>';"
+    & " [['d','Department'],['j','Job Role'],['o','OverTime'],['l','Job Level'],['g','Gender']].forEach(function(g){h+='<div><h4>'+g[1]+'</h4><div class=\'fog\'>'+N[g[0]].map(function(nm,i){return'<span class=\'fop'+(G[g[0]].indexOf(i)>-1?' on':'')+'\' data-g=\''+g[0]+'\' data-i=\''+i+'\'>'+E(g[0]=='l'?'Level '+nm:nm)+'</span>'}).join('')+'</div></div>'});"
+    & " h+='<div class=\'ffo\'><div class=\'fbt gh\' id=\'dr0\'>Reset</div><div class=\'fbt\' id=\'da\'>Apply filters</div></div>';"
+    & " $('dr').innerHTML=h}"
+    & "function open_(){G={d:F.d.slice(),j:F.j.slice(),o:F.o.slice(),l:F.l.slice(),g:F.g.slice()};drawer();$('vl').className='fv on';$('dr').className='fdr on'}"
+    & "function close_(){$('vl').className='fv';$('dr').className='fdr'}"
+    & "function tg(a,i){var k=a.indexOf(i);k>-1?a.splice(k,1):a.push(i)}"
+    & "function badge(){var n=F.d.length+F.j.length+F.o.length+F.l.length+F.g.length;$('fn').style.display=n?'block':'none';$('cb').style.display=n?'flex':'none'}"
+    & "function render(){var a=pick(),t=a.length,l=0;"
+    & " var hi=ri('high'),md=ri('med'),lo=ri('low');"
+    & " var hc=0,mc=0,lc=0,hl=0;a.forEach(function(x){l+=x.at;if(x.rl==hi){hc++;hl+=x.at}else if(x.rl==md)mc++;else if(x.rl==lo)lc++});"
+    & " var hr=hc?hl/hc:0;"
+    & " $('k1').textContent=fm(hc);$('k2').textContent=fm(mc);$('k3').textContent=fm(lc);"
+    & " $('k4').textContent=pc(hr);"
+    & " $('k4s').textContent=fm(hl)+' of '+fm(hc)+' high-risk employees have left';"
+    & " $('k4p').style.width=Math.round(Math.min(hr,1)*100)+'%';"
+    & " var dl=aggBy(a,'d');"
+    & " combo(dl);roleBars(a);matrix(a);statusBars(dl);"
+    & " $('tT').textContent=fm(t);$('tL').textContent=fm(l);$('tR').textContent=pc(t?l/t:0);"
+    & " badge()}"
+    & "document.addEventListener('click',function(e){var t=e.target.closest('[data-g],[data-x],#fo,#cb,#dx,#da,#dr0,#ca');if(!t)return;"
+    & " if(t.dataset.g){tg(G[t.dataset.g],+t.dataset.i);drawer()}"
+    & " else if(t.dataset.x){tg(F[t.dataset.x],+t.dataset.i);if(G)tg(G[t.dataset.x],+t.dataset.i);render();if(G)drawer()}"
+    & " else if(t.id=='fo')open_();else if(t.id=='dx')close_();"
+    & " else if(t.id=='da'){F={d:G.d.slice(),j:G.j.slice(),o:G.o.slice(),l:G.l.slice(),g:G.g.slice()};close_();render()}"
+    & " else if(t.id=='dr0'){G={d:[],j:[],o:[],l:[],g:[]};drawer()}"
+    & " else if(t.id=='ca'||t.id=='cb'){F={d:[],j:[],o:[],l:[],g:[]};if(G){G={d:[],j:[],o:[],l:[],g:[]};drawer()}render()}});"
+    & "$('vl').addEventListener('click',close_);"
+    & "document.addEventListener('keydown',function(e){if(e.key=='Escape')close_()});"
+    & "render();"
+    & "})();"
+
+RETURN
+    "<style>.app{" & DarkV & "}.thm:checked~.wrap .app{" & LightV & "}" & Css1 & Css2 & CssF & "</style>"
+        & "<input type='checkbox' id='thm' class='thm'" & IF ( IsLight, " checked", "" ) & ">"
+        & "<div class='wrap'><div class='app'>" & Bg & Hdr & Kpis
+        & "<div class='main'>" & CardCmb & CardRole & CardMx & CardSt & "</div>"
+        & "<div class='fv' id='vl'></div><div class='fdr' id='dr'></div>"
+        & "</div></div>"
+        & "<script>" & Js & "</script>"
